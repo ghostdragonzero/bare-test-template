@@ -1,6 +1,6 @@
 [package]
 edition = "2024"
-name = "bare-test-template"
+name = "{{ project-name }}"
 version = "0.1.0"
 
 [dependencies]
