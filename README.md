@@ -9,7 +9,7 @@ cargo install ostool
 运行测试
 
 ```bash
-cargo test --package project-name --test test -- tests --show-output
+cargo test --test test -- tests --show-output
 # 带uboot的开发板测试
-cargo test --package project-name --test test -- tests --show-output --uboot 
+cargo test --test test -- tests --show-output --uboot 
 ```
