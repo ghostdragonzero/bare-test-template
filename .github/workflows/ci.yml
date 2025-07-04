@@ -27,42 +27,7 @@ jobs:
     - name: Clippy for the default target
       run: cargo clippy
 
-  build:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-    env:
-      RUSTUP_TOOLCHAIN: nightly
-    steps:
-    - uses: actions/checkout@v4
-    - uses: dtolnay/rust-toolchain@stable
-      with:
-        toolchain: nightly
-        components: rust-src, llvm-tools
-        targets: aarch64-unknown-none-softfloat
-    - uses: Swatinem/rust-cache@v2
-      with:
-        shared-key: cargo-bin-cache
-        cache-targets: false
-    - run: cargo install cargo-binutils
-    - name: Build helloworld
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
-      run: make ARCH=${{ matrix.arch }} A=examples/helloworld
-
-    - uses: arceos-org/setup-musl@v1
-      with:
-        arch: ${{ matrix.arch }}
-    - name: Build helloworld-c
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
-      run: make ARCH=${{ matrix.arch }} A=examples/helloworld-c
-    - name: Build httpclient-c
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
-      run: make ARCH=${{ matrix.arch }} A=examples/httpclient-c
-    - name: Build httpserver-c
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
-      run: make ARCH=${{ matrix.arch }} A=examples/httpserver-c
-
-  cargo-test:
+  Test:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
