@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   clippy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
     env:
@@ -28,11 +28,10 @@ jobs:
       run: cargo clippy
 
   Test:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
         rust-toolchain: [nightly]
     env:
       RUSTUP_TOOLCHAIN: ${{ matrix.rust-toolchain }}
@@ -47,8 +46,7 @@ jobs:
       with:
         shared-key: cargo-bin-cache
         cache-targets: false
-    - run: sudo apt-get update && sudo apt-get install -y \
-        libudev-dev
+    - run: sudo apt update && sudo apt install -y libudev-dev
     - run: cargo install cargo-binutils
     - run: cargo install ostool@0.7.24 
     - uses: arceos-org/setup-qemu@v1
