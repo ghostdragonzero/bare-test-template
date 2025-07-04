@@ -48,7 +48,7 @@ jobs:
         shared-key: cargo-bin-cache
         cache-targets: false
     - run: cargo install cargo-binutils
-    - run: cargo install ostool@0.7 
+    - run: cargo install ostool@0.7.24 
     - uses: arceos-org/setup-qemu@v1
       with:
         version: 9.2.4
