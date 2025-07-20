@@ -2,4 +2,5 @@
 machine = "virt"
 cpu = "cortex-a53"
 graphic = false
-args = ""
+args = "-netdev user,id=net0 -device igb,netdev=net0"
+# 添加虚拟网卡
