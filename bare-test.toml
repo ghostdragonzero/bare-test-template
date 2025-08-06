@@ -3,5 +3,5 @@ machine = "virt"
 cpu = "cortex-a53"
 graphic = false
 # args = "-netdev user,id=net0 -device igb,netdev=net0"
- args = "-usb -device qemu-xhci,id=xhci -device usb-host,hostbus=1,hostaddr=2"
+ args = "-usb -device qemu-xhci,id=xhci -device usb-kbd "
 # 添加虚拟网卡

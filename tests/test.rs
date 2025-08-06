@@ -23,7 +23,7 @@ mod tests {
     use crab_usb::{
         endpoint::{
             direction::In,
-            kind::{Bulk, Isochronous},
+            kind::{Bulk, Interrupt, Isochronous},
         },
         standard::{descriptors::EndpointType, transfer::Direction},
         *,
@@ -94,29 +94,25 @@ mod tests {
 
                 for ep_desc in &interface_desc.endpoints {
                     info!("endpoint: {ep_desc:?}");
-
-                    match (ep_desc.transfer_type, ep_desc.direction) {
-                        (EndpointType::Bulk, Direction::In) => {
-                            let _bulk_in = interface.endpoint::<Bulk, In>(ep_desc.address).unwrap();
-                            // You can use bulk_in to transfer data
-                            // let mut buff = alloc::vec![0u8; 64];
-                            // while let Ok(n) = bulk_in.transfer(&mut buff).await {
-                            //     let data = &buff[..n];
-
-                            //     info!("bulk in data: {data:?}",);
-                            // }
-                        }
-                        (EndpointType::Isochronous, Direction::In) => {
-                            let _iso_in = interface
-                                .endpoint::<Isochronous, In>(ep_desc.address)
-                                .unwrap();
-                            // You can use iso_in to transfer data
+                    let mut ep = interface.endpoint::<Interrupt, In>(129).unwrap();
+                    loop{
+                        let mut buf = alloc::vec![0u8;64];
+                        let len = ep.transfer(&mut buf).unwrap().await.unwrap_or(0);
+                        if len != 0{
+                            println!("USB keyboar detect some!!!!!");
+                            println!("USB keyboar detect some!!!!!");
+                            println!("USB keyboar detect some!!!!!");
+                            println!("USB keyboar detect some!!!!!");
+                            println!("USB keyboar detect some!!!!!");
+                            println!("USB keyboar detect some!!!!!");
+                            
                         }
 
-                        _ => {
-                            info!("unsupported endpoint type");
-                        }
+
                     }
+
+
+                   
                 }
     
             }
